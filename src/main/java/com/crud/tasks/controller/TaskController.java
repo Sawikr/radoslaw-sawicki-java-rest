@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController("/v1/tasks")
+@RestController
+@RequestMapping("/v1/tasks")
 public class TaskController {
 
     @GetMapping
