@@ -13,12 +13,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -105,5 +111,33 @@ class TrelloClientTest {
         assertEquals("http://test.com", newCard.getShortUrl());
 
         LOGGER.info("Test shouldCreateCard is working!");
+    }
+
+    @Test
+    public void shouldReturnEmptyList() throws URISyntaxException {
+        // When
+        List<TrelloBoardDto> boardsResponse = boardsResponse();
+
+        // Then
+        assertEquals(new ArrayList<>(), boardsResponse.get(0).getLists());
+
+        LOGGER.info("Test shouldReturnEmptyList is working!");
+    }
+
+    private List<TrelloBoardDto> boardsResponse() throws URISyntaxException {
+        TrelloBoardDto[] boardsResponse = new TrelloBoardDto[1];
+        boardsResponse[0] = new TrelloBoardDto("test_id", "Kodilla", new ArrayList<>());
+        URI uri = new URI("http://test.com/members/test/boards?key=test&token=test&fields=name,id&lists=all");
+
+        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(boardsResponse);
+
+        try {
+            boardsResponse = restTemplate.getForObject(uri, TrelloBoardDto[].class);
+            return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+        assert boardsResponse != null;
+        return List.of(boardsResponse);
     }
 }
