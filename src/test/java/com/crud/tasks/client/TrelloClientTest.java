@@ -20,11 +20,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
 import static java.util.Optional.ofNullable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -127,6 +124,7 @@ class TrelloClientTest {
     private List<TrelloBoardDto> boardsResponse() throws URISyntaxException {
         TrelloBoardDto[] boardsResponse = new TrelloBoardDto[1];
         boardsResponse[0] = new TrelloBoardDto("test_id", "Kodilla", new ArrayList<>());
+
         URI uri = new URI("http://test.com/members/test/boards?key=test&token=test&fields=name,id&lists=all");
 
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(boardsResponse);
