@@ -112,6 +112,7 @@ class TrelloClientTest {
 
     @Test
     public void shouldReturnEmptyList() throws URISyntaxException {
+        // Given
         // When
         List<TrelloBoardDto> boardsResponse = boardsResponse();
 
@@ -121,6 +122,7 @@ class TrelloClientTest {
         LOGGER.info("Test shouldReturnEmptyList is working!");
     }
 
+    //Solution is not good
     private List<TrelloBoardDto> boardsResponse() throws URISyntaxException {
         TrelloBoardDto[] boardsResponse = new TrelloBoardDto[1];
         boardsResponse[0] = new TrelloBoardDto("test_id", "Kodilla", new ArrayList<>());
@@ -137,5 +139,26 @@ class TrelloClientTest {
         }
         assert boardsResponse != null;
         return List.of(boardsResponse);
+    }
+
+    //Proper solution
+    @Test
+    public void shouldReturnEmptyListProperSolution() throws URISyntaxException {
+        // Given
+        when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
+        when(trelloConfig.getTrelloAppKey()).thenReturn("test");
+        when(trelloConfig.getTrelloToken()).thenReturn("test");
+        when(trelloConfig.getTrelloUserName()).thenReturn("test");
+
+        URI uri = new URI("http://test.com/members/test/boards?key=test&token=test&fields=name,id&lists=all");
+        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
+
+        // When
+        List<TrelloBoardDto> boardsResponse = trelloClient.getTrelloBoardsOne();
+
+        // Then
+        assertEquals(boardsResponse, new ArrayList<>());
+
+        LOGGER.info("Test shouldReturnEmptyListProperSolution is working!");
     }
 }
