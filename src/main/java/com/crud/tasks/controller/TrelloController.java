@@ -21,7 +21,8 @@ public class TrelloController {
     private final TrelloClient trelloClient;
     private final TrelloService trelloService;
 
-    @GetMapping("boardsOne")
+    //change @GetMapping("boardsOne")
+    @GetMapping("boards")
     public ResponseEntity<List<TrelloBoardDto>> getTrelloBoards() {
         return ResponseEntity.ok(trelloService.fetchTrelloBoards());
     }
@@ -47,7 +48,8 @@ public class TrelloController {
         return ResponseEntity.ok(trelloService.createTrelloCard(trelloCardDto));
     }
 
-    @PostMapping("cardsWithParameters")
+    //change @PostMapping("cardWithParameters")
+    @PostMapping("newWithParameters")
     public ResponseEntity<CreatedTrelloCard> createTrelloCardWithAdditionalParameters(@RequestBody TrelloCardDto trelloCardDto) {
         return ResponseEntity.ok(trelloClient.createNewCard(trelloCardDto));
     }
