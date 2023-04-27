@@ -33,12 +33,14 @@ class SimpleEmailServiceTest {
     @Test
     public void shouldSendEmail() {
         //Given
-        Mail mail = new Mail("sawikr10@gmail.com", "Test", "Test Message");
+        Mail mail = new Mail("sawikr10@gmail.com", "Test", "Test Message",
+                "sawikr@op.pl");
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
+        mailMessage.setCc(mail.getToCc());
 
         //When
         simpleEmailService.send(mail);
