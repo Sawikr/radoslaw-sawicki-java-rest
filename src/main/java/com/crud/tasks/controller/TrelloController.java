@@ -1,10 +1,10 @@
 package com.crud.tasks.controller;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
-import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.client.TrelloClient;
+import com.crud.tasks.domain.CreatedTrelloCardDto;
+import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
-import com.crud.tasks.service.TrelloService;
+import com.crud.tasks.trello.facade.TrelloFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +19,15 @@ import java.util.Objects;
 public class TrelloController {
 
     private final TrelloClient trelloClient;
-    private final TrelloService trelloService;
+    private final TrelloFacade trelloFacade;
+    //private final TrelloService trelloService;
+
 
     //change @GetMapping("boardsOne")
     @GetMapping("boards")
     public ResponseEntity<List<TrelloBoardDto>> getTrelloBoards() {
-        return ResponseEntity.ok(trelloService.fetchTrelloBoards());
+        return ResponseEntity.ok(trelloFacade.fetchTrelloBoards());
+        //return ResponseEntity.ok(trelloService.fetchTrelloBoards());
     }
 
     @GetMapping("boardsTwo")
@@ -44,13 +47,14 @@ public class TrelloController {
     }
 
     @PostMapping("cards")
-    public ResponseEntity<CreatedTrelloCard> createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
-        return ResponseEntity.ok(trelloService.createTrelloCard(trelloCardDto));
+    public ResponseEntity<CreatedTrelloCardDto> createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
+        return ResponseEntity.ok(trelloFacade.createCard(trelloCardDto));
+        //return ResponseEntity.ok(trelloService.createTrelloCard(trelloCardDto));
     }
 
     //change @PostMapping("cardWithParameters")
     @PostMapping("newWithParameters")
-    public ResponseEntity<CreatedTrelloCard> createTrelloCardWithAdditionalParameters(@RequestBody TrelloCardDto trelloCardDto) {
+    public ResponseEntity<CreatedTrelloCardDto> createTrelloCardWithAdditionalParameters(@RequestBody TrelloCardDto trelloCardDto) {
         return ResponseEntity.ok(trelloClient.createNewCard(trelloCardDto));
     }
 }
