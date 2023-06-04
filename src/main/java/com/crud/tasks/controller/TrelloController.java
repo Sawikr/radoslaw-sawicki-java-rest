@@ -22,7 +22,6 @@ public class TrelloController {
     private final TrelloFacade trelloFacade;
     //private final TrelloService trelloService;
 
-
     //change @GetMapping("boardsOne")
     @GetMapping("boards")
     public ResponseEntity<List<TrelloBoardDto>> getTrelloBoards() {
