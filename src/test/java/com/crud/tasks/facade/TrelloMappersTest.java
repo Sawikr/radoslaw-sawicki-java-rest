@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class MappersTrelloTest {
+public class TrelloMappersTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TrelloClient.class);
 
