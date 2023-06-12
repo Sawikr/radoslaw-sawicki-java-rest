@@ -18,12 +18,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -133,12 +136,16 @@ public class TrelloCoverageTest {
 
         // When
         simpleEmailService2.send(mail);
+        SimpleMailMessage simpleMailMessage = simpleEmailService2.createMailMessage(mail);
+        javaMailSender.send(simpleMailMessage);
 
         // Then
         assertTrue(Optional.ofNullable(mail.getMailTo()).isPresent());
         assertTrue(Optional.ofNullable(mail.getSubject()).isPresent());
         assertTrue(Optional.ofNullable(mail.getMessage()).isPresent());
         assertTrue(Optional.ofNullable(mail.getToCc()).isPresent());
+
+        assertTrue(Objects.requireNonNull(simpleMailMessage.getSubject()).contains("Tasks: New Trello card"));
     }
 
     @Test
