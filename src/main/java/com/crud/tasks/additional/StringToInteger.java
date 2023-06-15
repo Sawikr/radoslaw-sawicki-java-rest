@@ -10,7 +10,7 @@ public class StringToInteger {
         System.out.println("The string converted to an integer is: " + integerNumber);
     }
 
-    private static Integer convertStringToInteger(String str) {
+    protected static Integer convertStringToInteger(String str) {
         int number = 0;
         try {
             number = Integer.parseInt(str);

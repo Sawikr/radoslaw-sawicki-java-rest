@@ -12,7 +12,7 @@ public class DecimalToHex {
         {
             rem = decimal%16;
             hex = hexchars[rem] + hex;
-            decimal  =decimal/16;
+            decimal = decimal/16;
         }
         return hex;
     }
