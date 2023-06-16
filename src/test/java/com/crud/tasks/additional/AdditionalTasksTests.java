@@ -78,9 +78,6 @@ public class AdditionalTasksTests {
         Optional<String> hex = Optional.ofNullable(DecimalToHex.toHex(decimal));
         Optional<String> toHexString = Optional.of(Integer.toHexString(decimal));
 
-        String[] arg = {};
-        DecimalToHex.main(arg);
-
         // Then
         assertTrue(hex.isPresent());
     }

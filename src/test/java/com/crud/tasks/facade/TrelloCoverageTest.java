@@ -72,6 +72,7 @@ public class TrelloCoverageTest {
     @InjectMocks
     private TrelloDto trelloDto;
 
+    // Test isn't necessary
     @Test
     @DisplayName("Test shouldNotWorkTrelloConfig")
     public void shouldNotWorkTrelloConfig() {
@@ -236,8 +237,10 @@ public class TrelloCoverageTest {
 
         List<TrelloBoard> trelloBoard = List.of(new TrelloBoard("1", "test", new ArrayList<>()));
         TrelloMapper trelloMapper = new TrelloMapper();
+
         //When
         List<TrelloBoardDto> result = trelloMapper.mapToBoardsDto(trelloBoard);
+
         //Then
         assertEquals(1, result.size());
         assertNotEquals(2, result.size());
